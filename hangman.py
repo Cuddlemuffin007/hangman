@@ -1,4 +1,5 @@
 # tiy hangman project
+from sys import exit
 # import random
 
 
@@ -24,11 +25,15 @@ def play_game():
             print("Sorry your guess was incorrect. You have {} turns left.".format(turns))
             if turns == 0:
                 print("Game over.")
-                break
+                play_again()
         elif guess in word:
             for idx in range(len(word)):
                 if guess == word[idx]:
                     hidden_word[idx] = word[idx]
+
+    else:
+        print("You win! The word was {}.".format(word))
+        play_again()
 
     print(word)
     print(''.join(hidden_word))
@@ -36,6 +41,14 @@ def play_game():
 
 
 def play_again():
-    pass
+    play_again = input("Would you like to play again? (Enter 'Y' or 'N')\n>> ")
+    while play_again != 'Y' and play_again != 'N':
+        play_again = input("Please enter 'Y' or 'N'.\n>> ")
+    if play_again == 'Y':
+        play_game()
+    elif play_again == 'N':
+        print('Goodbye!')
+        exit(0)
+
 
 play_game()
