@@ -17,7 +17,25 @@ def get_user_guess():
 
 
 def get_random_word():
+    valid_word = False
     word = random.choice(words)
+    game_mode = input("""Please select the level of difficulty.\n
+            'H' = Hard (Words 10+ characters)\n
+            'N' = Normal (Words from 6 - 9 characters)\n
+            'E' = Easy (Words from 4 - 6 characters)\n>> """)
+
+    while game_mode != 'H' and game_mode != 'N' and game_mode != 'E':
+        game_mode = input("Please enter 'H', 'N', or 'E'.\n>> ")
+
+    while not valid_word:
+        word = random.choice(words)
+        if game_mode == 'H' and len(word) >= 10:
+            valid_word = True
+        elif game_mode == 'N' and len(word) in range(6, 10):
+            valid_word = True
+        elif game_mode == 'E' and len(word) in range(4, 6):
+            valid_word = True
+
     return word.lower().strip()
 
 
