@@ -1,6 +1,9 @@
 # tiy hangman project
 from sys import exit
-# import random
+import random
+
+with open("/usr/share/dict/words") as word_file:
+    words = word_file.readlines()
 
 
 def get_user_guess():
@@ -9,27 +12,38 @@ def get_user_guess():
 
 
 def get_random_word():
-    pass
+    word = random.choice(words)
+    return word.strip()
 
 
 def play_game():
-    turns = 5
-    word = 'bathroom'
+    turns = 8
+    word = get_random_word()
     hidden_word = list('_'*len(word))
+    incorrect_guesses = []
 
-    while ''.join(hidden_word) != word and turns > 0:
+    # for debugging
+    # print(word, len(word))
+    print(''.join(hidden_word), "{} letters.".format(len(word)))
+
+    while ''.join(hidden_word) != word:
         guess = get_user_guess()
 
         if guess not in word:
             turns -= 1
+            incorrect_guesses.append(guess)
+
             print("Sorry your guess was incorrect. You have {} turns left.".format(turns))
             if turns == 0:
-                print("Game over.")
+                print("Game over. The word was {}.".format(word))
                 play_again()
         elif guess in word:
             for idx in range(len(word)):
                 if guess == word[idx]:
                     hidden_word[idx] = word[idx]
+
+        print(''.join(hidden_word))
+        print("Incorrect guesses: " + " ".join(incorrect_guesses))
 
     else:
         print("You win! The word was {}.".format(word))
