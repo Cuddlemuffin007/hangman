@@ -7,13 +7,18 @@ with open("/usr/share/dict/words") as word_file:
 
 
 def get_user_guess():
-    guess = input("Guess a letter.\n>> ").lower()
+    valid_guess = False
+
+    while not valid_guess:
+        guess = input("Guess a letter.\n>> ")
+        if guess.isalpha() and len(guess) == 1:
+            valid_guess = True
     return guess
 
 
 def get_random_word():
     word = random.choice(words)
-    return word.strip()
+    return word.lower().strip()
 
 
 def play_game():
@@ -21,6 +26,7 @@ def play_game():
     word = get_random_word()
     hidden_word = list('_'*len(word))
     incorrect_guesses = []
+    correct_guesses = []
 
     # for debugging
     # print(word, len(word))
@@ -29,7 +35,9 @@ def play_game():
     while ''.join(hidden_word) != word:
         guess = get_user_guess()
 
-        if guess not in word:
+        if guess in incorrect_guesses or guess in correct_guesses:
+            print("You've already guessed that letter!")
+        elif guess not in word:
             turns -= 1
             incorrect_guesses.append(guess)
 
@@ -38,6 +46,8 @@ def play_game():
                 print("Game over. The word was {}.".format(word))
                 play_again()
         elif guess in word:
+            correct_guesses.append(guess)
+
             for idx in range(len(word)):
                 if guess == word[idx]:
                     hidden_word[idx] = word[idx]
