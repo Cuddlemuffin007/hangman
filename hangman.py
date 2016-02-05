@@ -13,7 +13,7 @@ def get_user_guess():
         guess = input("Guess a letter.\n>> ")
         if guess.isalpha() and len(guess) == 1:
             valid_guess = True
-    return guess
+    return guess.lower()
 
 
 def get_random_word():
