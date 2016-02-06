@@ -22,27 +22,32 @@ def get_user_guess():
     return guess.lower()
 
 
-def get_random_word():
+def get_difficulty():
     if won_once:
         evil_mode = input(
-                "Wouldn't you like more of a challenge?\nYou can now play Evil Mode! Give it a try? ('Y' or 'N')\n>> ")
+                "You can now play Evil Mode! Give it a try? (Enter 'Y' or 'N')\n>> "
+                )
         while evil_mode != 'Y' and evil_mode != 'N':
             evil_mode = input("What was that? Please enter 'Y' or 'N'.")
 
         if evil_mode == 'Y':
             play_evil_game()
-        else:
-            pass
 
-    valid_word = False
-    word = random.choice(words).strip()
-    game_mode = input("""Please select the level of difficulty.\n
-            'H' = Hard (Words 10+ characters)\n
-            'N' = Normal (Words from 6 - 9 characters)\n
-            'E' = Easy (Words from 4 - 6 characters)\n>> """)
+    game_mode = input("""Please select the level of dfficulty.
+        'H' = Hard (Words 10+ characters)\n
+        'N' = Normal (Words from 6 - 9 characters)\n
+        'E' = Easy (Words from 4 - 6 characters)\n>>> """)
 
     while game_mode != 'H' and game_mode != 'N' and game_mode != 'E':
         game_mode = input("Please enter 'H', 'N', or 'E'.\n>> ")
+
+    return game_mode
+
+
+def get_random_word():
+    valid_word = False
+    word = random.choice(words).strip()
+    game_mode = get_difficulty()
 
     while not valid_word:
         word = random.choice(words).strip()
