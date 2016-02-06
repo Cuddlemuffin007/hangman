@@ -108,15 +108,16 @@ def play_evil_game():
                 if turns == 0:
                     print("Game over. The word was {}.".format(picked_word))
                     play_again()
-            elif guess in guess_pos:
-                for idx in range(len(hidden_word)):
-                    if hidden_word[idx] == '-' and guess_pos[idx] == guess:
-                        hidden_word[idx] = guess
 
-                remaining_words = update_remaining_list(guess, remaining_words)[1]
-                picked_word = random.choice(remaining_words)
+            for idx in range(len(hidden_word)):
+                if hidden_word[idx] == '-' and guess_pos[idx] == guess:
+                    hidden_word[idx] = guess
 
-        letters_used.append(guess)
+            remaining_words = update_remaining_list(guess, remaining_words)[1]
+            picked_word = random.choice(remaining_words)
+
+            letters_used.append(guess)
+
         print(''.join(hidden_word))
         print("Letters used: " + " ".join(sorted(letters_used)))
 
