@@ -4,9 +4,7 @@ import random
 
 # Flag to check if a user has won the game at least once
 # Winning a normal game sets this to true unlocking evil mode
-won_once = False
-if len(argv) > 1:
-    won_once = True if argv[1] == 'unlock' else False
+won_once = True if 'unlock' in argv else False
 
 with open("/usr/share/dict/words") as word_file:
     words = word_file.readlines()
