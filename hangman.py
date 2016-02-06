@@ -99,12 +99,11 @@ def play_evil_game():
 
         if guess in letters_used:
             print("You've already guessed that letter!")
-
         else:
             guess_pos = update_remaining_list(guess, remaining_words)[0]
             if guess not in guess_pos:
                 turns -= 1
-                letters_used.append(guess)
+
                 print("Sorry, '{}' is not there! You have {} turns left.".format(guess, turns))
                 remaining_words = update_remaining_list(guess, remaining_words)[1]
                 picked_word = random.choice(remaining_words)
@@ -112,8 +111,6 @@ def play_evil_game():
                     print("Game over. The word was {}.".format(picked_word))
                     play_again()
             elif guess in guess_pos:
-                letters_used.append(guess)
-
                 for idx in range(len(hidden_word)):
                     if hidden_word[idx] == '-' and guess_pos[idx] == guess:
                         hidden_word[idx] = guess
@@ -121,6 +118,7 @@ def play_evil_game():
                 remaining_words = update_remaining_list(guess, remaining_words)[1]
                 picked_word = random.choice(remaining_words)
 
+        letters_used.append(guess)
         print(''.join(hidden_word))
         print("Letters used: " + " ".join(sorted(letters_used)))
 
@@ -147,19 +145,17 @@ def play_game():
             print("You've already guessed that letter!")
         elif guess not in word:
             turns -= 1
-            letters_used.append(guess)
 
             print("Sorry '{}' is not there! You have {} turns left.".format(guess, turns))
             if turns == 0:
                 print("Game over. The word was {}.".format(word))
                 play_again()
         elif guess in word:
-            letters_used.append(guess)
-
             for idx in range(len(word)):
                 if guess == word[idx]:
                     hidden_word[idx] = word[idx]
 
+        letters_used.append(guess)
         print(''.join(hidden_word))
         print("Letters used: " + " ".join(sorted(letters_used)))
 
