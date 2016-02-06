@@ -1,10 +1,12 @@
 # tiy hangman project
-from sys import exit
+from sys import exit, argv
 import random
 
 # Flag to check if a user has won the game at least once
 # Winning a normal game sets this to true unlocking evil mode
 won_once = False
+if len(argv) > 1:
+    won_once = True if argv[1] == 'unlock' else False
 
 with open("/usr/share/dict/words") as word_file:
     words = word_file.readlines()
@@ -86,7 +88,6 @@ def play_evil_game():
     incorrect_guesses = []
     correct_guesses = []
 
-    print("Picked word: ", picked_word)
     print(''.join(hidden_word), "{} letters.".format(len(picked_word)))
 
     while ("-" in ''.join(hidden_word)):
@@ -118,7 +119,6 @@ def play_evil_game():
                 picked_word = random.choice(remaining_words)
 
         print(''.join(hidden_word))
-        print(picked_word)
         print("Incorrect guesses: " + " ".join(incorrect_guesses))
 
     else:
