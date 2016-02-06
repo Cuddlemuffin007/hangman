@@ -45,7 +45,7 @@ def get_random_word():
         game_mode = input("Please enter 'H', 'N', or 'E'.\n>> ")
 
     while not valid_word:
-        word = random.choice(words)
+        word = random.choice(words).strip()
         if game_mode == 'H' and len(word) >= 10:
             valid_word = True
         elif game_mode == 'N' and len(word) in range(6, 10):
@@ -98,11 +98,10 @@ def play_evil_game():
 
         else:
             guess_pos = update_remaining_list(guess, remaining_words)[0]
-            print("Guess position:", guess_pos)
             if guess not in guess_pos:
                 turns -= 1
                 incorrect_guesses.append(guess)
-                print("You have {} turns left.".format(turns))
+                print("Sorry, '{}' is not there! You have {} turns left.".format(guess, turns))
                 remaining_words = update_remaining_list(guess, remaining_words)[1]
                 picked_word = random.choice(remaining_words)
                 if turns == 0:
@@ -119,7 +118,7 @@ def play_evil_game():
                 picked_word = random.choice(remaining_words)
 
         print(''.join(hidden_word))
-        print("Incorrect guesses: " + " ".join(incorrect_guesses))
+        print("Incorrect guesses: " + " ".join(sorted(incorrect_guesses)))
 
     else:
         print("You win! The word was {}.".format(picked_word))
@@ -147,7 +146,7 @@ def play_game():
             turns -= 1
             incorrect_guesses.append(guess)
 
-            print("Sorry your guess was incorrect. You have {} turns left.".format(turns))
+            print("Sorry '{}' is not there! You have {} turns left.".format(guess, turns))
             if turns == 0:
                 print("Game over. The word was {}.".format(word))
                 play_again()
@@ -159,7 +158,7 @@ def play_game():
                     hidden_word[idx] = word[idx]
 
         print(''.join(hidden_word))
-        print("Incorrect guesses: " + " ".join(incorrect_guesses))
+        print("Incorrect guesses: " + " ".join(sorted(incorrect_guesses)))
 
     else:
         won_once = True
